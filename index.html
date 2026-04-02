@@ -163,12 +163,200 @@
     50% { opacity: 1; }
   }
 
+  /* Content sections */
+  .content-sections {
+    width: 100%;
+    max-width: 960px;
+    padding: 0 20px 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  details {
+    border: 1.5px solid var(--bg-grid);
+    border-radius: 14px;
+    background: #fff;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  details[open] {
+    border-color: #ccc;
+  }
+
+  summary {
+    font-family: var(--hand);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text);
+    padding: 18px 24px;
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    user-select: none;
+  }
+  summary::-webkit-details-marker { display: none; }
+  summary::before {
+    content: '+';
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 1.5px solid var(--bg-grid);
+    font-family: var(--sans);
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: var(--text-muted);
+    flex-shrink: 0;
+    transition: transform 0.2s, background 0.2s;
+  }
+  details[open] summary::before {
+    content: '-';
+    transform: rotate(0deg);
+    background: var(--bg-grid);
+  }
+
+  .section-body {
+    padding: 0 24px 28px;
+    font-family: var(--sans);
+    font-size: 0.92rem;
+    line-height: 1.75;
+    color: var(--text);
+  }
+  .section-body h3 {
+    font-family: var(--hand);
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 24px 0 8px;
+    color: var(--text);
+  }
+  .section-body h3:first-child {
+    margin-top: 0;
+  }
+  .section-body p {
+    margin: 0 0 12px;
+  }
+  .section-body .arg-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    font-family: var(--hand);
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #fff;
+    margin-right: 8px;
+    flex-shrink: 0;
+    vertical-align: middle;
+  }
+  .section-body .quote {
+    border-left: 3px solid var(--bg-grid);
+    padding: 8px 16px;
+    margin: 12px 0;
+    background: var(--bg);
+    border-radius: 0 8px 8px 0;
+    font-style: italic;
+    color: var(--text-muted);
+    font-size: 0.88rem;
+  }
+  .section-body .ref-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 0.85rem;
+  }
+  .section-body .ref-table th {
+    text-align: left;
+    padding: 8px 12px;
+    background: var(--bg);
+    border-bottom: 1.5px solid var(--bg-grid);
+    font-family: var(--hand);
+    font-size: 1rem;
+    font-weight: 600;
+  }
+  .section-body .ref-table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--bg-grid);
+    vertical-align: top;
+  }
+  .section-body .gap-chain {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 24px 0;
+    padding: 20px;
+    background: var(--bg);
+    border-radius: 12px;
+    border: 1.5px dashed var(--bg-grid);
+    font-family: var(--hand);
+    font-size: 1.05rem;
+  }
+  .gap-chain .chain-box {
+    padding: 10px 16px;
+    border-radius: 10px;
+    text-align: center;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+  .gap-chain .chain-box small {
+    display: block;
+    font-weight: 400;
+    font-size: 0.85rem;
+    opacity: 0.7;
+  }
+  .gap-chain .chain-arrow {
+    font-size: 1.4rem;
+    color: var(--text-muted);
+  }
+  .gap-chain .chain-q {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--rq-stroke);
+  }
+
+  .section-body .highlight-sentence {
+    font-family: var(--hand);
+    font-size: 1.15rem;
+    font-weight: 600;
+    text-align: center;
+    padding: 20px;
+    margin: 20px 0;
+    background: var(--rq-fill);
+    border-radius: 12px;
+    border: 1.5px solid var(--rq-stroke);
+    color: var(--rq-text);
+    line-height: 1.4;
+  }
+
+  .section-tag {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-left: 8px;
+    vertical-align: middle;
+    font-weight: 400;
+  }
+
   /* Responsive */
   @media (max-width: 768px) {
     .header h1 { font-size: 1.6rem; }
     .header p { font-size: 1rem; }
     .legend { gap: 10px 18px; }
     .legend-item { font-size: 0.9rem; }
+    summary { font-size: 1.2rem; padding: 14px 18px; }
+    .section-body { padding: 0 18px 22px; font-size: 0.88rem; }
+    .gap-chain { font-size: 0.9rem; gap: 8px; padding: 14px; }
   }
 </style>
 </head>
@@ -638,6 +826,151 @@
   </g>
 
 </svg>
+</div>
+
+<!-- ========== CONTENT SECTIONS ========== -->
+<div class="content-sections">
+
+  <!-- WHY CDA? -->
+  <details>
+    <summary>Why Critical Discourse Analysis?<span class="section-tag" style="background: var(--cda-fill); color: var(--cda-text);">methodology</span></summary>
+    <div class="section-body">
+
+      <h3><span class="arg-num" style="background: var(--cda-stroke);">1</span> Ontological Alignment with Sociotechnical Imaginaries</h3>
+      <p>Fairclough (2003, <em>Analysing Discourse</em>) explicitly connects CDA to imaginaries:</p>
+      <div class="quote">"Discourses not only represent the world as it is, they are also projective, imaginaries, representing possible worlds which are different from the actual world, and tied in to projects to change the world in particular directions."</div>
+      <p>This means CDA was designed for the kind of future-oriented, constructive discourse this study examines. No other qualitative method has this built-in theoretical bridge.</p>
+      <p>Jessop &amp; Fairclough (2004) further theorize through "cultural political economy" how "discourses constitute 'imaginaries' -- imaginary projections -- for new relations of structure and scale" that "may become hegemonic." This directly explains why certain AI-sustainability imaginaries gain dominance while others are marginalized.</p>
+
+      <h3><span class="arg-num" style="background: var(--cda-stroke);">2</span> Three-Dimensional Structural Homology</h3>
+      <p>The strongest justification: Fairclough's three levels map systematically onto the three theoretical pillars:</p>
+      <table class="ref-table">
+        <tr><th>Fairclough Level</th><th>Theory</th><th>What It Captures</th></tr>
+        <tr>
+          <td>Textual (vocabulary, modality, metaphor)</td>
+          <td style="color: var(--fc-text); font-weight: 600;">Futures Consciousness</td>
+          <td>How FC dimensions are linguistically encoded or suppressed</td>
+        </tr>
+        <tr>
+          <td>Discursive Practice (production, circulation, consumption)</td>
+          <td style="color: var(--ai-text); font-weight: 600;">AI Imaginaries</td>
+          <td>How collectively held visions circulate across YouTube/Reddit</td>
+        </tr>
+        <tr>
+          <td>Social Practice (ideology, hegemony)</td>
+          <td style="color: var(--clt-text); font-weight: 600;">Complexity Leadership Theory</td>
+          <td>Which leadership orientations are naturalized or foreclosed</td>
+        </tr>
+      </table>
+      <p>This isn't a forced mapping -- Fairclough (1992) designed the model precisely to bridge linguistic detail to social structure, which is the analytical movement this study requires.</p>
+
+      <h3><span class="arg-num" style="background: var(--cda-stroke);">3</span> Power-Analytic Capacity That Alternatives Lack</h3>
+      <p>Thematic analysis (Braun &amp; Clarke, 2006) tells you what themes appear but not how they function to maintain power relations. Content analysis quantifies presence but can't explain absence. The research questions specifically ask about <em>suppression</em> (RQ1) and <em>construction</em> of orientations (RQ2) -- this requires a methodology that explains what is systematically excluded and why.</p>
+      <p>Bareis &amp; Katzenbach (2022, <em>Science, Technology, &amp; Human Values</em>) used discourse analysis on national AI strategies and found "the narrative construction of AI strategies is strikingly similar: they all establish AI as an inevitable and massively disrupting technological development." Katzenbach (2021, <em>Big Data &amp; Society</em>) showed how AI is discursively positioned as "the technological fix" through a "discursive turn to responsibility." CDA is the established method for this kind of power analysis in AI discourse.</p>
+
+      <h3><span class="arg-num" style="background: var(--cda-stroke);">4</span> Legitimacy for Digital/Platform Discourse</h3>
+      <p>KhosraviNik (2017) formally established Social Media Critical Discourse Studies (SM-CDS), providing methodological protocols for applying CDA to platforms. His concept of the "Techno-Discursive dynamic" investigates how platform architecture shapes "who sees what in what context" -- directly relevant to the cross-platform comparison where YouTube panels (formal-institutional) and Reddit threads (informal-public) have fundamentally different dynamics affecting who can contribute to imagining AI futures.</p>
+      <p>A 2024 study in <em>Digital Scholarship in the Humanities</em> confirms CDA on Reddit data as established practice, ranging from large-scale computational work to close-reading CDA.</p>
+
+      <h3><span class="arg-num" style="background: var(--cda-stroke);">5</span> Established Precedent at CDA + STS + Leadership Intersections</h3>
+      <table class="ref-table">
+        <tr><th>Source</th><th>Key Argument</th></tr>
+        <tr>
+          <td>Toft (2025, <em>Business Strategy and the Environment</em>)</td>
+          <td>Critical sustainability discourses "remain underrepresented in leadership scholarship" while ecological modernism dominates -- directly supports using CDA to examine how discourse constructs operational over enabling leadership</td>
+        </tr>
+        <tr>
+          <td>Tourish (2019, <em>Organization Studies</em>)</td>
+          <td>Applied discourse-analytic tools to Complexity Leadership Theory specifically, arguing they "provide complementary understanding of complexity-based phenomena"</td>
+        </tr>
+        <tr>
+          <td>Levidow &amp; Papaioannou (2022, <em>Science and Public Policy</em>)</td>
+          <td>Found 22 papers used media discourse analysis to study sociotechnical imaginaries in energy systems -- establishing CDA as the standard method for imaginary analysis</td>
+        </tr>
+      </table>
+
+      <h3>Key Additional References</h3>
+      <table class="ref-table">
+        <tr><th>Source</th><th>Key Argument</th></tr>
+        <tr><td>Fairclough, N. (2003). <em>Analysing Discourse</em>. Routledge.</td><td>CDA explicitly theorizes discourse as imaginaries</td></tr>
+        <tr><td>Jessop, B. (2004). <em>Critical Discourse Studies</em>, 1(2).</td><td>Cultural political economy links CDA to hegemonic imaginaries</td></tr>
+        <tr><td>Bareis &amp; Katzenbach (2022). <em>ST&amp;HV</em>, 47(5), 855-881.</td><td>CDA precedent for studying AI imaginaries and performative politics</td></tr>
+        <tr><td>Katzenbach, C. (2021). <em>Big Data &amp; Society</em>, 8(2).</td><td>CDA reveals AI solutionism as discursive construction</td></tr>
+        <tr><td>KhosraviNik, M. (2017). In <em>Handbook of CDA</em>. Routledge.</td><td>SM-CDS legitimizes CDA for YouTube/Reddit data</td></tr>
+        <tr><td>Tourish, D. (2019). <em>Organization Studies</em>, 40(2).</td><td>CDA applied directly to Complexity Leadership Theory</td></tr>
+        <tr><td>Toft, Y. (2025). <em>Business Strategy and the Environment</em>.</td><td>CDA reveals suppression of critical sustainability discourses in leadership literature</td></tr>
+      </table>
+    </div>
+  </details>
+
+  <!-- WHY STUDY THIS? -->
+  <details>
+    <summary>Why Would We Study This?<span class="section-tag" style="background: var(--theme-fill); color: var(--theme-text);">motivation</span></summary>
+    <div class="section-body">
+
+      <h3>The Practical Stakes</h3>
+      <p>Sustainability leaders are making consequential decisions about AI right now -- adopting tools, setting strategy, shaping policy -- and those decisions are guided not by evidence (which barely exists yet) but by <em>imagined futures</em>. The visions leaders hold about what AI will do for sustainability determine what they invest in, what they resist, and what they never even consider.</p>
+
+      <h3>The Problem</h3>
+      <p>Most of those visions are not their own. They're absorbed from discourse -- conference panels, online debates, corporate narratives, media coverage. And that discourse is not neutral:</p>
+      <p><strong>It's dominated by tech-industry framing</strong> (Bareis &amp; Katzenbach, 2022). AI is overwhelmingly positioned as an optimization tool -- making supply chains greener, predicting climate patterns, automating reporting. This is the <em>instrumental-utopian</em> imaginary: AI as efficiency engine within the existing system.</p>
+      <p><strong>It systematically suppresses harder questions.</strong> Who controls the data? Whose futures are being optimized? Could AI enable fundamentally different ways of organizing -- not just faster versions of what we already do? The transformative imaginaries (both hopeful and cautionary) get crowded out.</p>
+      <p><strong>This narrows what leaders think is possible.</strong> If the only AI future you can imagine is "better dashboards and smarter predictions," you default to operational leadership -- managing the existing system more efficiently. The enabling leadership mode -- creating adaptive spaces where people reimagine systemic relationships -- becomes literally unimaginable. Not rejected, just never surfaced.</p>
+
+      <h3>Why This Matters for Sustainability Specifically</h3>
+      <p>Sustainability is not an optimization problem. The Brundtland definition is about intergenerational responsibility -- it demands exactly the capacities that Futures Consciousness describes: long time horizons, systemic awareness, openness to radically different alternatives, concern for others you'll never meet. If AI discourse narrows those capacities rather than expanding them, then the technology positioned as sustainability's greatest enabler could be constraining the very imagination sustainability requires.</p>
+      <p>Hultin &amp; Mahring (2025) put it sharply: uncertainty in socio-ecological systems should be treated as a generative space for imagination, not a problem for AI to optimize away. But that's precisely what dominant AI discourse does -- it treats the future as a prediction problem rather than an imaginative one.</p>
+
+      <div class="highlight-sentence">
+        If we don't understand how AI discourse shapes sustainability leaders' imagination, we risk a future where the technology marketed as our best hope for sustainability is actually foreclosing the transformative thinking sustainability demands.
+      </div>
+    </div>
+  </details>
+
+  <!-- WHERE IS THE GAP? -->
+  <details>
+    <summary>Where Is the Gap?<span class="section-tag" style="background: var(--rq-fill); color: var(--rq-text);">contribution</span></summary>
+    <div class="section-body">
+
+      <p>The gap sits at the intersection of three bodies of literature that have developed in parallel but never been connected:</p>
+
+      <h3>What Each Field Has Done</h3>
+      <p><strong style="color: var(--ai-text);">AI + Sustainability scholars</strong> (Vinuesa et al., 2020; Zechiel et al., 2024) have mapped what AI can technically do for the SDGs -- which targets it enables, which it inhibits, what corporate strategies look like. But they treat engagement with AI as a strategic/technical problem. They don't ask how people <em>think about</em> or <em>imagine</em> AI's role, or how those imaginaries shape what actions seem possible.</p>
+      <p><strong style="color: var(--ai-text);">STS / Imaginaries scholars</strong> (Jasanoff &amp; Kim, 2015; Bareis &amp; Katzenbach, 2022; Hultin &amp; Mahring, 2025) have shown that collectively held visions of technology are not passive reflections but constitutive forces -- they shape policy, investment, and institutional behavior. But this work operates at the <em>collective</em> level. It doesn't engage with the individual cognitive capacities that determine whether a person can actually entertain alternative futures or is locked into a single imaginary.</p>
+      <p><strong style="color: var(--fc-text);">Futures Consciousness scholars</strong> (Ahvenharju et al., 2018; Lalot et al., 2021) have developed and validated an individual-level construct with five measurable dimensions. But FC has been studied primarily through surveys and psychometric scales -- it hasn't been applied to naturally occurring discourse, and it hasn't been connected to specific technological domains like AI or to leadership theory.</p>
+
+      <h3>What Nobody Has Done</h3>
+      <p>The missing piece is the <strong>mechanism</strong>: How do collective AI imaginaries activate or suppress individual futures consciousness dimensions, and what leadership orientations result?</p>
+
+      <div class="gap-chain">
+        <div class="chain-box" style="background: var(--ai-fill); border: 1.5px solid var(--ai-stroke); color: var(--ai-text);">
+          AI Imaginaries<small>(collective discourse)</small>
+        </div>
+        <span class="chain-q">?</span>
+        <span class="chain-arrow">--></span>
+        <div class="chain-box" style="background: var(--fc-fill); border: 1.5px solid var(--fc-stroke); color: var(--fc-text);">
+          Futures Consciousness<small>(individual capacity)</small>
+        </div>
+        <span class="chain-q">?</span>
+        <span class="chain-arrow">--></span>
+        <div class="chain-box" style="background: var(--clt-fill); border: 1.5px solid var(--clt-stroke); color: var(--clt-text);">
+          Leadership Orientation<small>(organisational function)</small>
+        </div>
+      </div>
+
+      <p>Those two <strong style="color: var(--rq-stroke);">?</strong> arrows are the gap. Specifically:</p>
+      <p><strong>Imaginaries to FC</strong> -- No study has examined how circulating AI-sustainability discourse maps onto the five FC dimensions (Time Perspective, Agency Beliefs, Openness to Alternatives, Systems Perception, Concern for Others). We don't know which dimensions get activated by which imaginaries, or which get systematically suppressed. <strong>That's RQ1.</strong></p>
+      <p><strong>Discursive FC to Leadership</strong> -- No study has traced how the discursive representation (or suppression) of futures-oriented thinking constructs particular positions on the operational-enabling spectrum. We don't know whether, for example, suppressing Openness to Alternatives is what makes operational leadership appear natural and enabling leadership appear impractical. <strong>That's RQ2.</strong></p>
+
+      <h3>Why the Gap Persists</h3>
+      <p>These three fields don't naturally talk to each other. STS scholars study collective discourse, not individual psychology. FC scholars use psychometric methods, not discourse analysis. Leadership scholars study organizational behavior, not technology imaginaries. This study bridges all three by using CDA as the connective methodology -- Fairclough's three levels (text, discursive practice, social practice) map onto exactly these three streams, creating one analytical framework where three separate literatures couldn't.</p>
+
+      <div class="highlight-sentence">
+        We know AI shapes sustainability outcomes, we know imaginaries shape action, and we know futures consciousness shapes how people engage with the future -- but no one has studied how AI imaginaries in sustainability discourse activate or constrain the futures consciousness that leadership for sustainability demands.
+      </div>
+    </div>
+  </details>
+
 </div>
 
 <div id="tooltip" class="tooltip">
