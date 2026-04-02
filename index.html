@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Constructed Futures -- Conceptual Map</title>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #fafaf8;
+    --bg-grid: #e8e6e1;
+    --stroke: #2c2c2c;
+    --stroke-light: #8a8a8a;
+    --text: #1a1a1a;
+    --text-muted: #6b6b6b;
+
+    --fc-fill: #dbeafe;
+    --fc-stroke: #3b82f6;
+    --fc-text: #1e40af;
+
+    --ai-fill: #f3e8ff;
+    --ai-stroke: #a855f7;
+    --ai-text: #6b21a8;
+
+    --clt-fill: #dcfce7;
+    --clt-stroke: #22c55e;
+    --clt-text: #166534;
+
+    --cda-fill: #fef3c7;
+    --cda-stroke: #f59e0b;
+    --cda-text: #92400e;
+
+    --rq-fill: #ffe4e6;
+    --rq-stroke: #f43f5e;
+    --rq-text: #9f1239;
+
+    --theme-fill: #f0f9ff;
+    --theme-stroke: #0ea5e9;
+    --theme-text: #0c4a6e;
+
+    --hand: 'Caveat', cursive;
+    --sans: 'DM Sans', sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    font-family: var(--sans);
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    padding: 40px 20px 10px;
+    max-width: 900px;
+  }
+  .header h1 {
+    font-family: var(--hand);
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.15;
+  }
+  .header p {
+    font-family: var(--hand);
+    font-size: 1.2rem;
+    color: var(--text-muted);
+    margin-top: 6px;
+  }
+
+  /* Canvas container */
+  .canvas-wrap {
+    position: relative;
+    width: 100%;
+    max-width: 1400px;
+    padding: 0 20px 60px;
+  }
+  .canvas-wrap svg {
+    width: 100%;
+    height: auto;
+  }
+
+  /* Tooltip */
+  .tooltip {
+    position: fixed;
+    pointer-events: none;
+    background: #1a1a1a;
+    color: #f5f5f5;
+    font-family: var(--sans);
+    font-size: 0.82rem;
+    line-height: 1.5;
+    padding: 12px 16px;
+    border-radius: 8px;
+    max-width: 340px;
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.2s, transform 0.2s;
+    z-index: 1000;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+  }
+  .tooltip.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .tooltip .tt-title {
+    font-weight: 600;
+    margin-bottom: 4px;
+    font-size: 0.88rem;
+  }
+  .tooltip .tt-body {
+    margin-bottom: 4px;
+  }
+  .tooltip .tt-source {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: #aaa;
+    margin-top: 6px;
+  }
+
+  /* Legend */
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px 28px;
+    justify-content: center;
+    padding: 16px 20px;
+    max-width: 900px;
+    margin-bottom: 20px;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--hand);
+    font-size: 1.05rem;
+    color: var(--text-muted);
+  }
+  .legend-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 2px solid;
+  }
+
+  /* Interactive hint */
+  .hint {
+    font-family: var(--hand);
+    font-size: 1rem;
+    color: var(--text-muted);
+    text-align: center;
+    padding-bottom: 10px;
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .header h1 { font-size: 1.6rem; }
+    .header p { font-size: 1rem; }
+    .legend { gap: 10px 18px; }
+    .legend-item { font-size: 0.9rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Constructed Futures, Constrained Imaginations</h1>
+  <p>AI Imaginaries and Futures Consciousness in Sustainability Discourse</p>
+</div>
+
+<div class="legend">
+  <div class="legend-item">
+    <div class="legend-dot" style="background: var(--fc-fill); border-color: var(--fc-stroke);"></div>
+    Futures Consciousness
+  </div>
+  <div class="legend-item">
+    <div class="legend-dot" style="background: var(--ai-fill); border-color: var(--ai-stroke);"></div>
+    AI Imaginaries
+  </div>
+  <div class="legend-item">
+    <div class="legend-dot" style="background: var(--clt-fill); border-color: var(--clt-stroke);"></div>
+    Complexity Leadership
+  </div>
+  <div class="legend-item">
+    <div class="legend-dot" style="background: var(--cda-fill); border-color: var(--cda-stroke);"></div>
+    CDA Methodology
+  </div>
+  <div class="legend-item">
+    <div class="legend-dot" style="background: var(--rq-fill); border-color: var(--rq-stroke);"></div>
+    Research Questions
+  </div>
+</div>
+
+<p class="hint">Hover over elements to explore</p>
+
+<div class="canvas-wrap">
+<svg viewBox="0 0 1400 1050" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Hand-drawn filter -->
+    <filter id="sketch" x="-2%" y="-2%" width="104%" height="104%">
+      <feTurbulence type="turbulence" baseFrequency="0.03" numOctaves="3" seed="2" result="turbulence"/>
+      <feDisplacementMap in="SourceGraphic" in2="turbulence" scale="1.5" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <filter id="sketch-text" x="-1%" y="-1%" width="102%" height="102%">
+      <feTurbulence type="turbulence" baseFrequency="0.02" numOctaves="2" seed="5" result="turbulence"/>
+      <feDisplacementMap in="SourceGraphic" in2="turbulence" scale="0.8" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+
+    <!-- Arrow markers -->
+    <marker id="arrow-fc" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#3b82f6"/>
+    </marker>
+    <marker id="arrow-ai" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#a855f7"/>
+    </marker>
+    <marker id="arrow-clt" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#22c55e"/>
+    </marker>
+    <marker id="arrow-cda" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#f59e0b"/>
+    </marker>
+    <marker id="arrow-rq" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#f43f5e"/>
+    </marker>
+    <marker id="arrow-gray" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#8a8a8a"/>
+    </marker>
+
+    <!-- Dot grid pattern -->
+    <pattern id="dotgrid" width="24" height="24" patternUnits="userSpaceOnUse">
+      <circle cx="12" cy="12" r="0.8" fill="#d4d4d4"/>
+    </pattern>
+  </defs>
+
+  <!-- Background dot grid -->
+  <rect width="1400" height="1050" fill="var(--bg)" rx="12"/>
+  <rect width="1400" height="1050" fill="url(#dotgrid)" rx="12"/>
+
+  <!-- ========== TITLE AREA: Theme & Purpose ========== -->
+  <g class="node" data-tooltip="theme-purpose" filter="url(#sketch)">
+    <rect x="420" y="20" width="560" height="90" rx="16"
+          fill="#f0f9ff" stroke="#0ea5e9" stroke-width="2" stroke-dasharray="8,4"/>
+    <text x="700" y="52" text-anchor="middle" font-family="'Caveat', cursive" font-size="22" font-weight="700" fill="#0c4a6e">
+      Theme: AI + Sustainability = Fundamental Tension
+    </text>
+    <text x="700" y="80" text-anchor="middle" font-family="'Caveat', cursive" font-size="16" fill="#0c4a6e" opacity="0.7">
+      Purpose: How imagined AI futures activate or constrain futures-oriented thinking
+    </text>
+  </g>
+
+
+  <!-- ========== THREE THEORETICAL PILLARS ========== -->
+
+  <!-- FC Pillar (Left) -->
+  <g class="node" data-tooltip="fc-main" filter="url(#sketch)">
+    <rect x="40" y="165" width="370" height="70" rx="14"
+          fill="var(--fc-fill)" stroke="var(--fc-stroke)" stroke-width="2.5"/>
+    <text x="225" y="195" text-anchor="middle" font-family="'Caveat', cursive" font-size="24" font-weight="700" fill="var(--fc-text)">
+      Futures Consciousness
+    </text>
+    <text x="225" y="218" text-anchor="middle" font-family="'Caveat', cursive" font-size="15" fill="var(--fc-text)" opacity="0.7">
+      Ahvenharju et al. (2018)
+    </text>
+  </g>
+
+  <!-- FC Five Dimensions -->
+  <g class="node" data-tooltip="fc-time" filter="url(#sketch)">
+    <rect x="25" y="260" width="148" height="44" rx="10"
+          fill="var(--fc-fill)" stroke="var(--fc-stroke)" stroke-width="1.5"/>
+    <text x="99" y="288" text-anchor="middle" font-family="'Caveat', cursive" font-size="16" fill="var(--fc-text)">
+      Time Perspective
+    </text>
+  </g>
+  <g class="node" data-tooltip="fc-agency" filter="url(#sketch)">
+    <rect x="183" y="260" width="148" height="44" rx="10"
+          fill="var(--fc-fill)" stroke="var(--fc-stroke)" stroke-width="1.5"/>
+    <text x="257" y="288" text-anchor="middle" font-family="'Caveat', cursive" font-size="16" fill="var(--fc-text)">
+      Agency Beliefs
+    </text>
+  </g>
+  <g class="node" data-tooltip="fc-openness" filter="url(#sketch)">
+    <rect x="341" y="260" width="148" height="44" rx="10"
+          fill="var(--fc-fill)" stroke="var(--fc-stroke)" stroke-width="1.5"/>
+    <text x="415" y="288" text-anchor="middle" font-family="'Caveat', cursive" font-size="16" fill="var(--fc-text)">
+      Openness to Alt.
+    </text>
+  </g>
+  <g class="node" data-tooltip="fc-systems" filter="url(#sketch)">
+    <rect x="65" y="316" width="165" height="44" rx="10"
+          fill="var(--fc-fill)" stroke="var(--fc-stroke)" stroke-width="1.5"/>
+    <text x="147" y="344" text-anchor="middle" font-family="'Caveat', cursive" font-size="16" fill="var(--fc-text)">
+      Systems Perception
+    </text>
+  </g>
+  <g class="node" data-tooltip="fc-concern" filter="url(#sketch)">
+    <rect x="245" y="316" width="165" height="44" rx="10"
+          fill="var(--fc-fill)" stroke="var(--fc-stroke)" stroke-width="1.5"/>
+    <text x="327" y="344" text-anchor="middle" font-family="'Caveat', cursive" font-size="16" fill="var(--fc-text)">
+      Concern for Others
+    </text>
+  </g>
+
+  <!-- Connector lines: FC main to dimensions -->
+  <line x1="145" y1="235" x2="99" y2="260" stroke="var(--fc-stroke)" stroke-width="1.2" opacity="0.4"/>
+  <line x1="225" y1="235" x2="257" y2="260" stroke="var(--fc-stroke)" stroke-width="1.2" opacity="0.4"/>
+  <line x1="310" y1="235" x2="415" y2="260" stroke="var(--fc-stroke)" stroke-width="1.2" opacity="0.4"/>
+  <line x1="145" y1="235" x2="147" y2="316" stroke="var(--fc-stroke)" stroke-width="1.2" opacity="0.4"/>
+  <line x1="290" y1="235" x2="327" y2="316" stroke="var(--fc-stroke)" stroke-width="1.2" opacity="0.4"/>
+
+
+  <!-- AI Imaginaries Pillar (Center) -->
+  <g class="node" data-tooltip="ai-main" filter="url(#sketch)">
+    <rect x="515" y="165" width="370" height="70" rx="14"
+          fill="var(--ai-fill)" stroke="var(--ai-stroke)" stroke-width="2.5"/>
+    <text x="700" y="195" text-anchor="middle" font-family="'Caveat', cursive" font-size="24" font-weight="700" fill="var(--ai-text)">
+      AI Imaginaries
+    </text>
+    <text x="700" y="218" text-anchor="middle" font-family="'Caveat', cursive" font-size="15" fill="var(--ai-text)" opacity="0.7">
+      Jasanoff &amp; Kim (2015) / Hultin &amp; Mahring (2025)
+    </text>
+  </g>
+
+  <!-- 2x2 Typology -->
+  <g class="node" data-tooltip="ai-iu" filter="url(#sketch)">
+    <rect x="520" y="260" width="172" height="44" rx="10"
+          fill="var(--ai-fill)" stroke="var(--ai-stroke)" stroke-width="1.5"/>
+    <text x="606" y="288" text-anchor="middle" font-family="'Caveat', cursive" font-size="15" fill="var(--ai-text)">
+      Instrumental-Utopian
+    </text>
+  </g>
+  <g class="node" data-tooltip="ai-id" filter="url(#sketch)">
+    <rect x="702" y="260" width="178" height="44" rx="10"
+          fill="var(--ai-fill)" stroke="var(--ai-stroke)" stroke-width="1.5"/>
+    <text x="791" y="288" text-anchor="middle" font-family="'Caveat', cursive" font-size="15" fill="var(--ai-text)">
+      Instrumental-Dystopian
+    </text>
+  </g>
+  <g class="node" data-tooltip="ai-tu" filter="url(#sketch)">
+    <rect x="520" y="316" width="178" height="44" rx="10"
+          fill="var(--ai-fill)" stroke="var(--ai-stroke)" stroke-width="1.5"/>
+    <text x="609" y="344" text-anchor="middle" font-family="'Caveat', cursive" font-size="15" fill="var(--ai-text)">
+      Transformative-Utopian
+    </text>
+  </g>
+  <g class="node" data-tooltip="ai-td" filter="url(#sketch)">
+    <rect x="708" y="316" width="178" height="44" rx="10"
+          fill="var(--ai-fill)" stroke="var(--ai-stroke)" stroke-width="1.5"/>
+    <text x="797" y="344" text-anchor="middle" font-family="'Caveat', cursive" font-size="15" fill="var(--ai-text)">
+      Transformative-Dystopian
+    </text>
+  </g>
+
+  <!-- Typology axis labels -->
+  <text x="700" y="254" text-anchor="middle" font-family="'Caveat', cursive" font-size="12" fill="var(--ai-text)" opacity="0.5">
+    Valence: Utopian &lt;----&gt; Dystopian
+  </text>
+
+  <!-- Connector lines: AI main to typology -->
+  <line x1="620" y1="235" x2="606" y2="260" stroke="var(--ai-stroke)" stroke-width="1.2" opacity="0.4"/>
+  <line x1="780" y1="235" x2="791" y2="260" stroke="var(--ai-stroke)" stroke-width="1.2" opacity="0.4"/>
+  <line x1="620" y1="235" x2="609" y2="316" stroke="var(--ai-stroke)" stroke-width="1.2" opacity="0.4"/>
+  <line x1="780" y1="235" x2="797" y2="316" stroke="var(--ai-stroke)" stroke-width="1.2" opacity="0.4"/>
+
+
+  <!-- CLT Pillar (Right) -->
+  <g class="node" data-tooltip="clt-main" filter="url(#sketch)">
+    <rect x="990" y="165" width="370" height="70" rx="14"
+          fill="var(--clt-fill)" stroke="var(--clt-stroke)" stroke-width="2.5"/>
+    <text x="1175" y="195" text-anchor="middle" font-family="'Caveat', cursive" font-size="24" font-weight="700" fill="var(--clt-text)">
+      Complexity Leadership
+    </text>
+    <text x="1175" y="218" text-anchor="middle" font-family="'Caveat', cursive" font-size="15" fill="var(--clt-text)" opacity="0.7">
+      Uhl-Bien &amp; Arena (2018)
+    </text>
+  </g>
+
+  <!-- CLT Spectrum -->
+  <g class="node" data-tooltip="clt-operational" filter="url(#sketch)">
+    <rect x="995" y="268" width="155" height="44" rx="10"
+          fill="var(--clt-fill)" stroke="var(--clt-stroke)" stroke-width="1.5"/>
+    <text x="1072" y="296" text-anchor="middle" font-family="'Caveat', cursive" font-size="16" fill="var(--clt-text)">
+      Operational
+    </text>
+  </g>
+  <g class="node" data-tooltip="clt-adaptive" filter="url(#sketch)">
+    <rect x="1160" y="268" width="155" height="44" rx="10"
+          fill="var(--clt-fill)" stroke="var(--clt-stroke)" stroke-width="1.5" stroke-dasharray="6,3"/>
+    <text x="1237" y="296" text-anchor="middle" font-family="'Caveat', cursive" font-size="16" fill="var(--clt-text)">
+      Adaptive Spaces
+    </text>
+  </g>
+  <g class="node" data-tooltip="clt-enabling" filter="url(#sketch)">
+    <rect x="1075" y="326" width="200" height="44" rx="10"
+          fill="var(--clt-fill)" stroke="var(--clt-stroke)" stroke-width="1.5"/>
+    <text x="1175" y="354" text-anchor="middle" font-family="'Caveat', cursive" font-size="16" fill="var(--clt-text)">
+      Enabling Leadership
+    </text>
+  </g>
+
+  <!-- CLT spectrum arrow -->
+  <line x1="1020" y1="312" x2="1020" y2="338" stroke="var(--clt-stroke)" stroke-width="1.2" opacity="0.4"/>
+  <line x1="1310" y1="312" x2="1310" y2="338" stroke="var(--clt-stroke)" stroke-width="1.2" opacity="0.4"/>
+
+  <!-- Spectrum label -->
+  <text x="1175" y="390" text-anchor="middle" font-family="'Caveat', cursive" font-size="13" fill="var(--clt-text)" opacity="0.5">
+    Operational &lt;---------&gt; Enabling spectrum
+  </text>
+
+
+  <!-- ========== CONVERGENCE ZONE ========== -->
+
+  <!-- Large convergence box -->
+  <g class="node" data-tooltip="convergence" filter="url(#sketch)">
+    <rect x="200" y="430" width="1000" height="80" rx="18"
+          fill="#fefce8" stroke="#eab308" stroke-width="2" stroke-dasharray="10,5"/>
+    <text x="700" y="462" text-anchor="middle" font-family="'Caveat', cursive" font-size="22" font-weight="700" fill="#854d0e">
+      Analytical Convergence
+    </text>
+    <text x="700" y="490" text-anchor="middle" font-family="'Caveat', cursive" font-size="16" fill="#854d0e" opacity="0.7">
+      "How AI imaginaries activate or constrain FC dimensions, shaping leadership orientations"
+    </text>
+  </g>
+
+  <!-- Arrows from three pillars to convergence -->
+  <path d="M 225 360 C 225 395, 400 415, 450 430" stroke="var(--fc-stroke)" stroke-width="2" fill="none"
+        marker-end="url(#arrow-fc)" opacity="0.6" filter="url(#sketch)"/>
+  <path d="M 700 360 L 700 430" stroke="var(--ai-stroke)" stroke-width="2" fill="none"
+        marker-end="url(#arrow-ai)" opacity="0.6" filter="url(#sketch)"/>
+  <path d="M 1175 370 C 1175 395, 1000 415, 950 430" stroke="var(--clt-stroke)" stroke-width="2" fill="none"
+        marker-end="url(#arrow-clt)" opacity="0.6" filter="url(#sketch)"/>
+
+  <!-- Arrow labels -->
+  <text x="290" y="398" font-family="'Caveat', cursive" font-size="13" fill="var(--fc-text)" opacity="0.6" transform="rotate(-15, 290, 398)">
+    individual capacity
+  </text>
+  <text x="718" y="398" font-family="'Caveat', cursive" font-size="13" fill="var(--ai-text)" opacity="0.6">
+    collective visions
+  </text>
+  <text x="1040" y="398" font-family="'Caveat', cursive" font-size="13" fill="var(--clt-text)" opacity="0.6" transform="rotate(15, 1040, 398)">
+    organisational function
+  </text>
+
+
+  <!-- ========== CDA METHODOLOGY ========== -->
+
+  <!-- CDA Main box -->
+  <g class="node" data-tooltip="cda-main" filter="url(#sketch)">
+    <rect x="350" y="560" width="700" height="64" rx="14"
+          fill="var(--cda-fill)" stroke="var(--cda-stroke)" stroke-width="2.5"/>
+    <text x="700" y="587" text-anchor="middle" font-family="'Caveat', cursive" font-size="23" font-weight="700" fill="var(--cda-text)">
+      Critical Discourse Analysis
+    </text>
+    <text x="700" y="610" text-anchor="middle" font-family="'Caveat', cursive" font-size="15" fill="var(--cda-text)" opacity="0.7">
+      Fairclough (1992) -- Three-Dimensional Framework
+    </text>
+  </g>
+
+  <!-- Arrow from convergence to CDA -->
+  <path d="M 700 510 L 700 560" stroke="#eab308" stroke-width="2" fill="none"
+        marker-end="url(#arrow-cda)" opacity="0.5" filter="url(#sketch)"/>
+  <text x="720" y="540" font-family="'Caveat', cursive" font-size="13" fill="var(--cda-text)" opacity="0.6">
+    operationalised through
+  </text>
+
+  <!-- Three CDA levels -->
+  <g class="node" data-tooltip="cda-text" filter="url(#sketch)">
+    <rect x="200" y="660" width="280" height="60" rx="12"
+          fill="var(--cda-fill)" stroke="var(--cda-stroke)" stroke-width="1.8"/>
+    <text x="340" y="685" text-anchor="middle" font-family="'Caveat', cursive" font-size="18" font-weight="600" fill="var(--cda-text)">
+      Textual Level
+    </text>
+    <text x="340" y="706" text-anchor="middle" font-family="'Caveat', cursive" font-size="14" fill="var(--cda-text)" opacity="0.7">
+      Vocabulary, modality, transitivity
+    </text>
+  </g>
+
+  <g class="node" data-tooltip="cda-discursive" filter="url(#sketch)">
+    <rect x="560" y="660" width="280" height="60" rx="12"
+          fill="var(--cda-fill)" stroke="var(--cda-stroke)" stroke-width="1.8"/>
+    <text x="700" y="685" text-anchor="middle" font-family="'Caveat', cursive" font-size="18" font-weight="600" fill="var(--cda-text)">
+      Discursive Practice
+    </text>
+    <text x="700" y="706" text-anchor="middle" font-family="'Caveat', cursive" font-size="14" fill="var(--cda-text)" opacity="0.7">
+      FC dimensions invoked/suppressed
+    </text>
+  </g>
+
+  <g class="node" data-tooltip="cda-social" filter="url(#sketch)">
+    <rect x="920" y="660" width="280" height="60" rx="12"
+          fill="var(--cda-fill)" stroke="var(--cda-stroke)" stroke-width="1.8"/>
+    <text x="1060" y="685" text-anchor="middle" font-family="'Caveat', cursive" font-size="18" font-weight="600" fill="var(--cda-text)">
+      Social Practice
+    </text>
+    <text x="1060" y="706" text-anchor="middle" font-family="'Caveat', cursive" font-size="14" fill="var(--cda-text)" opacity="0.7">
+      Leadership orientations naturalised
+    </text>
+  </g>
+
+  <!-- Connectors CDA main to levels -->
+  <line x1="500" y1="624" x2="340" y2="660" stroke="var(--cda-stroke)" stroke-width="1.5" opacity="0.4" filter="url(#sketch)"/>
+  <line x1="700" y1="624" x2="700" y2="660" stroke="var(--cda-stroke)" stroke-width="1.5" opacity="0.4" filter="url(#sketch)"/>
+  <line x1="900" y1="624" x2="1060" y2="660" stroke="var(--cda-stroke)" stroke-width="1.5" opacity="0.4" filter="url(#sketch)"/>
+
+  <!-- Cross-links: CDA levels to theory streams -->
+  <path d="M 340 660 C 340 640, 225 400, 225 360" stroke="var(--fc-stroke)" stroke-width="1" fill="none"
+        stroke-dasharray="4,4" opacity="0.25"/>
+  <path d="M 700 660 C 700 640, 700 400, 700 360" stroke="var(--ai-stroke)" stroke-width="1" fill="none"
+        stroke-dasharray="4,4" opacity="0.25"/>
+  <path d="M 1060 660 C 1060 640, 1175 400, 1175 370" stroke="var(--clt-stroke)" stroke-width="1" fill="none"
+        stroke-dasharray="4,4" opacity="0.25"/>
+
+  <!-- Cross-link annotations -->
+  <text x="255" y="520" font-family="'Caveat', cursive" font-size="11" fill="var(--fc-stroke)" opacity="0.4" transform="rotate(-75, 255, 520)">
+    identifies imaginaries
+  </text>
+  <text x="1110" y="520" font-family="'Caveat', cursive" font-size="11" fill="var(--clt-stroke)" opacity="0.4" transform="rotate(75, 1110, 520)">
+    naturalises orientations
+  </text>
+
+
+  <!-- ========== DATA SOURCES ========== -->
+
+  <!-- YouTube -->
+  <g class="node" data-tooltip="data-youtube" filter="url(#sketch)">
+    <rect x="310" y="758" width="200" height="48" rx="10"
+          fill="#fff" stroke="var(--stroke-light)" stroke-width="1.5"/>
+    <text x="410" y="786" text-anchor="middle" font-family="'Caveat', cursive" font-size="17" fill="var(--text)">
+      YouTube (8-10)
+    </text>
+    <text x="410" y="798" text-anchor="middle" font-family="'Caveat', cursive" font-size="11" fill="var(--text-muted)">
+      formal-institutional
+    </text>
+  </g>
+
+  <!-- Reddit -->
+  <g class="node" data-tooltip="data-reddit" filter="url(#sketch)">
+    <rect x="890" y="758" width="200" height="48" rx="10"
+          fill="#fff" stroke="var(--stroke-light)" stroke-width="1.5"/>
+    <text x="990" y="786" text-anchor="middle" font-family="'Caveat', cursive" font-size="17" fill="var(--text)">
+      Reddit (8-10)
+    </text>
+    <text x="990" y="798" text-anchor="middle" font-family="'Caveat', cursive" font-size="11" fill="var(--text-muted)">
+      informal-public
+    </text>
+  </g>
+
+  <!-- Comparison arrow between data sources -->
+  <line x1="510" y1="782" x2="890" y2="782" stroke="var(--stroke-light)" stroke-width="1.2" stroke-dasharray="6,4" opacity="0.4" filter="url(#sketch)"/>
+  <text x="700" y="775" text-anchor="middle" font-family="'Caveat', cursive" font-size="13" fill="var(--text-muted)">
+    cross-domain comparison
+  </text>
+
+  <!-- Connector: data to CDA levels -->
+  <line x1="410" y1="758" x2="380" y2="720" stroke="var(--stroke-light)" stroke-width="1" opacity="0.3"/>
+  <line x1="990" y1="758" x2="1020" y2="720" stroke="var(--stroke-light)" stroke-width="1" opacity="0.3"/>
+
+
+  <!-- ========== RESEARCH QUESTIONS ========== -->
+
+  <!-- RQ1 -->
+  <g class="node" data-tooltip="rq1" filter="url(#sketch)">
+    <rect x="180" y="860" width="480" height="70" rx="14"
+          fill="var(--rq-fill)" stroke="var(--rq-stroke)" stroke-width="2.5"/>
+    <text x="420" y="888" text-anchor="middle" font-family="'Caveat', cursive" font-size="19" font-weight="700" fill="var(--rq-text)">
+      RQ1: FC in Discourse
+    </text>
+    <text x="420" y="914" text-anchor="middle" font-family="'Caveat', cursive" font-size="14" fill="var(--rq-text)" opacity="0.75">
+      How are FC dimensions represented or suppressed?
+    </text>
+  </g>
+
+  <!-- RQ2 -->
+  <g class="node" data-tooltip="rq2" filter="url(#sketch)">
+    <rect x="740" y="860" width="480" height="70" rx="14"
+          fill="var(--rq-fill)" stroke="var(--rq-stroke)" stroke-width="2.5"/>
+    <text x="980" y="888" text-anchor="middle" font-family="'Caveat', cursive" font-size="19" font-weight="700" fill="var(--rq-text)">
+      RQ2: Leadership Orientations
+    </text>
+    <text x="980" y="914" text-anchor="middle" font-family="'Caveat', cursive" font-size="14" fill="var(--rq-text)" opacity="0.75">
+      How does AI framing construct operational-enabling positions?
+    </text>
+  </g>
+
+  <!-- Connectors from CDA to RQs -->
+  <path d="M 340 720 L 380 860" stroke="var(--rq-stroke)" stroke-width="2" fill="none"
+        marker-end="url(#arrow-rq)" opacity="0.5" filter="url(#sketch)"/>
+  <path d="M 1060 720 L 1020 860" stroke="var(--rq-stroke)" stroke-width="2" fill="none"
+        marker-end="url(#arrow-rq)" opacity="0.5" filter="url(#sketch)"/>
+
+  <!-- Mechanistic link between RQ1 and RQ2 -->
+  <path d="M 660 895 L 740 895" stroke="var(--rq-stroke)" stroke-width="1.8" fill="none"
+        marker-end="url(#arrow-rq)" opacity="0.4" stroke-dasharray="6,3" filter="url(#sketch)"/>
+  <text x="700" y="886" text-anchor="middle" font-family="'Caveat', cursive" font-size="12" fill="var(--rq-text)" opacity="0.5">
+    mechanism
+  </text>
+
+
+  <!-- ========== KEY INSIGHT ANNOTATION ========== -->
+  <g class="node" data-tooltip="key-insight" filter="url(#sketch)">
+    <rect x="380" y="966" width="640" height="54" rx="12"
+          fill="#fefce8" stroke="#eab308" stroke-width="1.5" stroke-dasharray="5,3"/>
+    <text x="700" y="998" text-anchor="middle" font-family="'Caveat', cursive" font-size="16" fill="#854d0e">
+      Core argument: Suppressing FC dimensions in discourse naturalises operational leadership,
+    </text>
+    <text x="700" y="1014" text-anchor="middle" font-family="'Caveat', cursive" font-size="16" fill="#854d0e">
+      foreclosing the adaptive spaces needed for sustainability transformation
+    </text>
+  </g>
+
+
+  <!-- ========== HAND-DRAWN ANNOTATIONS ========== -->
+
+  <!-- Squiggly underline on "constructed" -->
+  <path d="M 422 106 Q 435 112, 448 106 Q 461 100, 474 106 Q 487 112, 500 106 Q 513 100, 526 106 Q 539 112, 552 106 Q 565 100, 578 106"
+        stroke="#0ea5e9" stroke-width="1.5" fill="none" opacity="0.3"/>
+
+  <!-- Small star/asterisk decorations -->
+  <text x="175" y="180" font-family="'Caveat', cursive" font-size="28" fill="var(--fc-stroke)" opacity="0.2">*</text>
+  <text x="882" y="180" font-family="'Caveat', cursive" font-size="28" fill="var(--ai-stroke)" opacity="0.2">*</text>
+  <text x="1358" y="180" font-family="'Caveat', cursive" font-size="28" fill="var(--clt-stroke)" opacity="0.2">*</text>
+
+  <!-- Margin annotation -->
+  <g transform="rotate(-90, 50, 600)">
+    <text x="50" y="600" font-family="'Caveat', cursive" font-size="14" fill="var(--text-muted)" opacity="0.35" text-anchor="middle">
+      Theory --&gt; Convergence --&gt; Method --&gt; Questions
+    </text>
+  </g>
+
+</svg>
+</div>
+
+<div id="tooltip" class="tooltip">
+  <div class="tt-title"></div>
+  <div class="tt-body"></div>
+  <div class="tt-source"></div>
+</div>
+
+<script>
+const tooltipData = {
+  'theme-purpose': {
+    title: 'Theme & Purpose',
+    body: 'AI enables 134 SDG targets yet inhibits 59 (Vinuesa et al., 2020). This thesis investigates the imaginative dimension: how leaders envision AI\'s role in sustainable futures, and how those visions shape their orientations and practices.',
+    source: 'Vinuesa et al. (2020); Jasanoff & Kim (2015)'
+  },
+  'fc-main': {
+    title: 'Futures Consciousness (Primary Analytical Lens)',
+    body: 'A psychological capacity for engaging meaningfully with the future. Unlike strategic foresight (what organisations do), FC describes what individuals ARE. Five validated dimensions serve as the individual-level construct for analysing how leaders imaginatively engage with AI discourse.',
+    source: 'Ahvenharju et al. (2018); Lalot et al. (2021)'
+  },
+  'fc-time': {
+    title: 'Time Perspective',
+    body: 'The temporal scope of discourse: does it extend beyond immediate returns? When AI-sustainability discourse narrows temporal horizons to quarterly gains, it suppresses this dimension.',
+    source: 'Ahvenharju et al. (2018), Dimension 1'
+  },
+  'fc-agency': {
+    title: 'Agency Beliefs',
+    body: 'Beliefs about one\'s capacity to influence the future. When AI is framed as an autonomous force ("AI will..."), human agency is discursively suppressed. When framed as a tool ("we can use AI to..."), agency is activated.',
+    source: 'Ahvenharju et al. (2018), Dimension 2'
+  },
+  'fc-openness': {
+    title: 'Openness to Alternatives',
+    body: 'Willingness to consider genuinely different futures. The "there is no alternative" (TINA) rhetoric around AI adoption directly constrains this dimension, foreclosing transformative possibilities.',
+    source: 'Ahvenharju et al. (2018), Dimension 3'
+  },
+  'fc-systems': {
+    title: 'Systems Perception',
+    body: 'Awareness of interconnections, feedback loops, and emergent properties. AI-sustainability discourse that isolates efficiency gains from rebound effects (Jevons paradox) demonstrates suppressed systems perception.',
+    source: 'Ahvenharju et al. (2018), Dimension 4'
+  },
+  'fc-concern': {
+    title: 'Concern for Others',
+    body: 'Ethical orientation toward future generations and affected communities. The Brundtland definition itself embeds this dimension. Discourse that centres shareholder value over intergenerational equity suppresses it.',
+    source: 'Ahvenharju et al. (2018), Dimension 5; WCED (1987)'
+  },
+  'ai-main': {
+    title: 'AI Imaginaries (Classification Framework)',
+    body: 'Collectively held, institutionally stabilised visions of AI futures. These are not merely speculative but constitutive: they shape what becomes thinkable. Organised along two dimensions: valence (utopian/dystopian) and orientation to change (instrumental/transformative).',
+    source: 'Jasanoff & Kim (2015); Hultin & Mahring (2025)'
+  },
+  'ai-iu': {
+    title: 'Instrumental-Utopian',
+    body: '"AI will optimise sustainability." Positions AI as a solution provider within existing structures. The dominant corporate imaginary found by Zechiel et al. (2024) across 244 AI-for-sustainability initiatives. Centres technical efficiency, not systemic reimagination.',
+    source: 'Zechiel et al. (2024)'
+  },
+  'ai-id': {
+    title: 'Instrumental-Dystopian',
+    body: '"AI will entrench inequalities." Warns that AI deepens existing power asymmetries, concentrates resources in technology-producing nations, and accelerates resource consumption through rebound effects. Still works within existing system logic.',
+    source: 'Vinuesa et al. (2020); Alcott (2005)'
+  },
+  'ai-tu': {
+    title: 'Transformative-Utopian',
+    body: '"AI can help reimagine our relationship with ecological systems." Positions AI as enabling fundamentally new ways of knowing, relating, and organising. Uncertainty as generative space for imagination, not a problem to optimise away.',
+    source: 'Hultin & Mahring (2025); Gumuesay & Reinecke (2022)'
+  },
+  'ai-td': {
+    title: 'Transformative-Dystopian',
+    body: '"AI will fundamentally alter what it means to be human in relation to nature." Warns of deep ontological shifts: the replacement of relational knowing with prediction, the erosion of embodied ecological understanding.',
+    source: 'Hultin & Mahring (2025)'
+  },
+  'clt-main': {
+    title: 'Complexity Leadership Theory',
+    body: 'Conceptualises leadership as three interacting functions rather than individual traits. This study focuses on the operational-enabling spectrum: from AI for incremental optimisation to AI for reimagining organisational purpose.',
+    source: 'Uhl-Bien et al. (2007); Uhl-Bien & Arena (2018)'
+  },
+  'clt-operational': {
+    title: 'Operational Leadership',
+    body: 'Managing formal structures, planning, coordinating. When discourse frames AI solely as an efficiency tool, it naturalises operational leadership as the appropriate response to sustainability challenges.',
+    source: 'Uhl-Bien & Arena (2018)'
+  },
+  'clt-adaptive': {
+    title: 'Adaptive Spaces',
+    body: 'Environments where entrepreneurial and operational dynamics interact to produce emergent innovation. Futures-conscious leaders create these spaces rather than defaulting to efficiency-driven AI applications.',
+    source: 'Uhl-Bien & Arena (2018)'
+  },
+  'clt-enabling': {
+    title: 'Enabling Leadership',
+    body: 'Creating conditions for transformative emergence. Using AI to reimagine organisational purpose, enable systemic transformation, and cultivate adaptive spaces where new sustainability futures can be imagined.',
+    source: 'Uhl-Bien & Arena (2018)'
+  },
+  'convergence': {
+    title: 'Analytical Convergence',
+    body: 'The three theories converge: AI imaginaries (collective visions) activate or constrain FC dimensions (individual capacity), which corresponds to leadership orientations (organisational function). CDA traces these connections across textual, discursive, and social practice levels.',
+    source: 'Integrated framework'
+  },
+  'cda-main': {
+    title: 'Critical Discourse Analysis',
+    body: 'Fairclough\'s three-dimensional framework provides the methodology to trace how imaginaries construct FC patterns and naturalise leadership orientations. Chosen because it examines language as constitutive of social reality, not merely reflective of it.',
+    source: 'Fairclough (1992)'
+  },
+  'cda-text': {
+    title: 'Textual Level',
+    body: 'Vocabulary, modality, and transitivity patterns identify which imaginary categories are constructed in the discourse. E.g., "AI will solve" (high modality, AI as agent) vs. "we might explore" (hedged modality, human agency). Maps to the 4-category typology.',
+    source: 'Fairclough (1992), Level 1'
+  },
+  'cda-discursive': {
+    title: 'Discursive Practice Level',
+    body: 'Traces how FC dimensions are invoked, marginalised, or absent. E.g., when temporal scope is narrowed ("this quarter") or agency displaced ("AI will determine"), specific FC dimensions are suppressed in the discourse.',
+    source: 'Fairclough (1992), Level 2'
+  },
+  'cda-social': {
+    title: 'Social Practice Level',
+    body: 'Identifies which leadership orientations are naturalised or foreclosed. When operational efficiency becomes the "common sense" of AI-sustainability discourse, enabling leadership is delegitimised as impractical idealism.',
+    source: 'Fairclough (1992), Level 3'
+  },
+  'data-youtube': {
+    title: 'YouTube Corpus (Formal-Institutional)',
+    body: '8-10 webinars and panel discussions where sustainability leaders (directors, CIOs) discuss AI strategy. Selected via keyword search, filtered for named organisational roles. Transcripts manually verified against auto-generated captions for modality/hedging accuracy.',
+    source: 'Snelson (2016); 2022-2026 timeframe'
+  },
+  'data-reddit': {
+    title: 'Reddit Corpus (Informal-Public)',
+    body: '8-10 threads from r/sustainability and r/FutureStudies with sustained, multi-perspective engagement. Posts paraphrased (not quoted verbatim) to prevent re-identification through search. Captures naturalistic discourse without researcher prompts.',
+    source: 'Proferes et al. (2021); 2022-2026 timeframe'
+  },
+  'rq1': {
+    title: 'RQ1: FC Dimensions in Discourse',
+    body: 'How are the dimensions of futures consciousness discursively represented or suppressed in online AI-sustainability discourse? Answered primarily through textual and discursive practice analysis.',
+    source: 'Ahvenharju et al. (2018) + Fairclough (1992)'
+  },
+  'rq2': {
+    title: 'RQ2: Leadership Orientations',
+    body: 'How does the discursive framing of AI for sustainability construct particular leadership orientations along the operational-enabling spectrum? RQ1 feeds into RQ2: suppressing FC dimensions IS the mechanism that naturalises operational orientations.',
+    source: 'Uhl-Bien & Arena (2018) + Fairclough (1992)'
+  },
+  'key-insight': {
+    title: 'Core Argument',
+    body: 'The three-level CDA analysis traces a chain: when discourse suppresses openness to alternatives or narrows temporal scope (FC), it simultaneously constitutes conditions under which operational leadership appears natural and enabling leadership appears impractical (CLT). The imaginaries are the vehicle; FC suppression is the mechanism; constrained leadership is the outcome.',
+    source: 'Integrated analytical framework'
+  }
+};
+
+// Tooltip elements
+const tooltipEl = document.getElementById('tooltip');
+const ttTitle = tooltipEl.querySelector('.tt-title');
+const ttBody = tooltipEl.querySelector('.tt-body');
+const ttSource = tooltipEl.querySelector('.tt-source');
+
+document.querySelectorAll('.node').forEach(function(node) {
+  node.style.cursor = 'pointer';
+
+  node.addEventListener('mouseenter', function(e) {
+    var key = node.dataset.tooltip;
+    var data = tooltipData[key];
+    if (!data) return;
+
+    // Highlight effect
+    var rect = node.querySelector('rect');
+    if (rect) {
+      rect.style.transition = 'filter 0.2s';
+      rect.style.filter = 'brightness(1.05) drop-shadow(0 2px 8px rgba(0,0,0,0.12))';
+    }
+
+    ttTitle.textContent = data.title;
+    ttBody.textContent = data.body;
+    ttSource.textContent = data.source;
+    tooltipEl.classList.add('visible');
+  });
+
+  node.addEventListener('mousemove', function(e) {
+    var pad = 16;
+    var x = e.clientX + pad;
+    var y = e.clientY + pad;
+
+    var rect = tooltipEl.getBoundingClientRect();
+    if (x + rect.width > window.innerWidth - pad) {
+      x = e.clientX - rect.width - pad;
+    }
+    if (y + rect.height > window.innerHeight - pad) {
+      y = e.clientY - rect.height - pad;
+    }
+
+    tooltipEl.style.left = x + 'px';
+    tooltipEl.style.top = y + 'px';
+  });
+
+  node.addEventListener('mouseleave', function() {
+    var rect = node.querySelector('rect');
+    if (rect) {
+      rect.style.filter = '';
+    }
+    tooltipEl.classList.remove('visible');
+  });
+});
+
+// Keyboard accessibility
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    tooltipEl.classList.remove('visible');
+  }
+});
+</script>
+</body>
+</html>
